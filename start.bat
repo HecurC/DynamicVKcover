@@ -1,21 +1,25 @@
+@echo off
+
+chcp 65001
+
 @echo Ожидайте!
 
-@echo Загружаю aiohttp!
+@echo 3агружаю aiohttp!
 pip install aiohttp==3.8.6
 
-@echo Загружаю pendulum!
+@echo 3агружаю pendulum!
 pip install pendulum==2.1.2
 
-@echo Загружаю pillow!
+@echo 3агружаю pillow!
 pip install Pillow==10.0.1
 
-@echo Загружаю dotenv!
+@echo 3агружаю dotenv!
 pip install python-dotenv==1.0.0
 
-@echo Загружаю vkbottle!
+@echo 3агружаю vkbottle!
 pip install vkbottle==4.3.12
 
-@echo Загружаю код!
+@echo 3агружаю код!
 
 python main.py
 

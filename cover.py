@@ -8,6 +8,16 @@ import pendulum
 from PIL import Image, ImageDraw, ImageFont
 
 
+async def get_random_image(url) -> BytesIO:
+    image_buffer = BytesIO()
+
+    async with ClientSession() as session:
+        response = await session.get(url)
+
+        async for chunk in response.content.iter_chunked(1024):
+            image_buffer.write(chunk)
+    return image_buffer
+
 class CoverImage:
     WIDTH, HEIGHT = 1920, 768
     FILL = "#FFFFFF"
@@ -20,21 +30,10 @@ class CoverImage:
 
         self.buffer = None
 
-    async def get_random_image(self, url) -> BytesIO:
-        image_buffer = BytesIO()
+    async def draw_cover(self, url: str) -> None:
+        random_image = await get_random_image(url=url)
 
-        async with ClientSession() as session:
-            response = await session.get(url)
-
-            async for chunk in response.content.iter_chunked(1024):
-                image_buffer.write(chunk)
-        return image_buffer
-
-    async def draw_cover(self, url) -> None:
-        random_image = await self.get_random_image(url=url)
-
-        img = Image.open(BytesIO(random_image.getvalue()))
-        img = img.convert("RGBA").resize((self.WIDTH, self.HEIGHT))
+        img = Image.open(BytesIO(random_image.getvalue())).convert("RGBA").resize((self.WIDTH, self.HEIGHT))
 
         draw = ImageDraw.Draw(img)
         font_time = ImageFont.truetype(self.FONT, 200)
@@ -45,29 +44,16 @@ class CoverImage:
         current_time = current_datetime.strftime("%H:%M")
         formatted_date = current_datetime.to_formatted_date_string()
 
-        draw.text(
-            (self.WIDTH / 2, self.HEIGHT / 2), current_time, self.FILL, font_time, "ms", stroke_width=3,
-            stroke_fill=self.STROKE_FILL
-        )
-        draw.text(
-            (self.WIDTH / 2, self.HEIGHT / 2 + 100), formatted_date, self.FILL, font_date, "ms", stroke_width=3,
-            stroke_fill=self.STROKE_FILL
-        )
-        draw.text(
-            (self.WIDTH / 2 + 700, self.HEIGHT / 2 + 200), "Обложка меняется каждые 10 минут", self.FILL, font_alert,
-            "ms", stroke_width=2,
-            stroke_fill=self.STROKE_FILL
-        )
-        draw.text(
-            (self.WIDTH / 2 + 700, self.HEIGHT / 2 + 170), "@bogdanihoor4", self.FILL,
-            font_alert, "ms", stroke_width=2,
-            stroke_fill=self.STROKE_FILL
-        )
-        draw.text(
-            (self.WIDTH / 2 + 700, self.HEIGHT / 2 + 370), "Привет, человек с телефона!", self.FILL,
-            font_alert, "ms", stroke_width=2,
-            stroke_fill=self.STROKE_FILL
-        )
+        text_params = [
+            ((self.WIDTH / 2, self.HEIGHT / 2), current_time, font_time, 3),
+            ((self.WIDTH / 2, self.HEIGHT / 2 + 100), formatted_date, font_date, 3),
+            ((self.WIDTH / 2 + 700, self.HEIGHT / 2 + 200), "Обложка меняется каждые 10 минут", font_alert, 2),
+            ((self.WIDTH / 2 + 700, self.HEIGHT / 2 + 170), "@bogdanihoor4", font_alert, 2),
+            ((self.WIDTH / 2 + 700, self.HEIGHT / 2 + 370), "Привет, человек с телефона!", font_alert, 2)
+        ]
+
+        for xy, text, font, stroke_width in text_params:
+            draw.text(xy, text, self.FILL, font, "ms", stroke_width=stroke_width, stroke_fill=self.STROKE_FILL)
 
         self.buffer = BytesIO()
         img.save(self.buffer, "PNG")
