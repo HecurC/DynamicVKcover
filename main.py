@@ -16,13 +16,16 @@ cover = CoverImage(api, USER_ID)
 async def main():
     while True:
         try:
-            await cover.draw_cover(url="https://i.ibb.co/2Sgn6cG/alena-aenami-dawn.png")
+            await cover.draw_cover(url="https://minimalistic-wallpaper.demolab.com/?random")
         except Exception as e:
-            print(f"An error occured: {e}")
+            print(f"An error occurred while drawing the cover: {e}")
             await cover.draw_cover(url="https://imgbly.com/ib/paOsXGoMl4.png")
-        finally:
+        try:
             await cover.upload_cover()
-            await asyncio.sleep(600)
+        except Exception as e:
+            print(f"An error occurred while uploading the cover: {e}")
+
+        await asyncio.sleep(600)
 
 
 if __name__ == "__main__":
