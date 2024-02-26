@@ -15,7 +15,7 @@ cover = CoverImage(api, USER_ID)
 // hotfix
 if TOKEN == "Insert your token here:":
     print("Check .env")
-    sys.exit()
+    sys.exit(0)
 
 
 async def main():
