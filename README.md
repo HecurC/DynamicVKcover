@@ -1,6 +1,5 @@
 <h1>Динамическая обложка для VK!</h1>
-[![Python package](https://github.com/Unitysourceman/DynamicVKcover/actions/workflows/dynamicvkcover-package.yml/badge.svg)](https://github.com/Unitysourceman/DynamicVKcover/actions/workflows/dynamicvkcover-package.yml)
-
+![python workflow](https://github.com/Unitysourceman/DynamicVKcover/actions/workflows/dynamicvkcover-package.yml/badge.svg)
 <h2>Туториал:</h2>
 
 ⚠️НИКОМУ НЕ ПЕРЕДАВАЙТЕ ВАШ ТОКЕН. МОЙ КОД НЕ СОБИРАЕТ ТОКЕНЫ И ДРУГУЮ ЛИЧНУЮ ИНФОРМАЦИЮ⚠️
