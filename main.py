@@ -12,7 +12,7 @@ TOKEN = os.getenv("TOKEN")
 USER_ID = 516887792
 api = API(TOKEN)
 cover = CoverImage(api, USER_ID)
-// hotfix
+# hotfix
 if TOKEN == "Insert your token here:":
     print("Check .env")
     sys.exit(0)
