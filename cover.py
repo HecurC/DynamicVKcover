@@ -39,18 +39,18 @@ class CoverImage:
         draw = ImageDraw.Draw(img)
         font_time = ImageFont.truetype(self.FONT, 200)
         font_date = ImageFont.truetype(self.FONT, 100)
-        font_alert = ImageFont.truetype(self.FONT, 25)
+        # font_alert = ImageFont.truetype(self.FONT, 25)
 
         current_datetime = pendulum.now()
         current_time = current_datetime.strftime("%H:%M")
         formatted_date = current_datetime.to_formatted_date_string()
 
+        # will be in 1.2
+
         text_params = [
             ((self.WIDTH / 2, self.HEIGHT / 2), current_time, font_time, 3),
-            ((self.WIDTH / 2, self.HEIGHT / 2 + 100), formatted_date, font_date, 3),
-            ((self.WIDTH / 2 + 700, self.HEIGHT / 2 + 200), "Обложка меняется каждые 10 минут", font_alert, 2),
-            ((self.WIDTH / 2 + 700, self.HEIGHT / 2 + 170), "@bogdanihoor4", font_alert, 2),
-            ((self.WIDTH / 2 + 700, self.HEIGHT / 2 + 370), "Привет, человек с телефона!", font_alert, 2)
+            ((self.WIDTH / 2, self.HEIGHT / 2 + 100), formatted_date, font_date, 3)
+        #     ((self.WIDTH / 2 + 700, self.HEIGHT / 2 + 200), "Custom text", font_alert, 2),
         ]
 
         for xy, text, font, stroke_width in text_params:
