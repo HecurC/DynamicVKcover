@@ -1,23 +1,19 @@
 import asyncio
+import os
 import logging
-import re
 from dotenv import load_dotenv
 from vkbottle import API
 from cover import CoverImage
-# import app
 
 load_dotenv()
 
-async def main(Token):
-    realtoken = re.search(r'access_token=([^&]*)', Token.value).group(1)
-    user_id = re.search(r'user_id=([^&]*)', Token.value).group(1)
-    print(realtoken, user_id)
+TOKEN = os.getenv("TOKEN")
+USER_ID = os.getenv("USERID")
+api = API(TOKEN)
+cover = CoverImage(api, USER_ID)
 
-    TOKEN = realtoken
-    USER_ID = user_id
-    api = API(TOKEN)
-    cover = CoverImage(api, USER_ID)
 
+async def main():
     while True:
         try:
             await cover.draw_cover(url="https://minimalistic-wallpaper.demolab.com/?random")
@@ -31,8 +27,7 @@ async def main(Token):
 
         await asyncio.sleep(600)
 
-
+            
 if __name__ == "__main__":
-    logging.basicConfig()
-    Token = app.Token
-    asyncio.run(main(Token))
+    logging.basicConfig(level=logging.INFO)
+    asyncio.run(main())

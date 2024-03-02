@@ -1,15 +1,19 @@
 import re
 import flet as ft
-from flet import TextField, Container, Text
+from flet import TextField, Container, Text, Markdown
+import dotenv
 
-async def main(page: ft.Page):
+async def app(page: ft.Page):
     page.title = "Dynamic VK covers"
     page.theme_mode = ft.ThemeMode.DARK
 
     page.vertical_alignment = 'center'
     page.horizontal_alignment = 'center'
 
-# Variables
+    async def openurl(e):
+        await page.launch_url_async(e.data)
+
+    # Variables
 
     Token: TextField = ft.TextField(
         label="URL-ссылка",
@@ -18,21 +22,26 @@ async def main(page: ft.Page):
         border_radius=17,
         hint_text="Вставьте ссылку..."
     )
-    Instruction: Text = ft.Text(
-        "1) Перейдите по ссылке: {0}\n2) Авторизуйтесь и скопируйте содержимое адресной строки\n3) Вставьте его в "
-        "строку\n".format(())
+    Md: Markdown = ft.Markdown(
+        "1) Перейдите по ссылке: [vkhost](https://vkhost.github.io/)\n2) Авторизуйтесь и скопируйте содержимое адресной"
+        "строки\n3) Вставьте его в "
+        "строку\n",
+        extension_set=ft.MarkdownExtensionSet.GITHUB_WEB,
+        on_tap_link=openurl,
+
     )
 
-
-# Function
+    # Function
 
     async def send(e):
         try:
-            # await CoverImage.draw_cover()
-            # await CoverImage.upload_cover()
             realtoken = re.search(r'access_token=([^&]*)', Token.value).group(1)
             user_id = re.search(r'user_id=([^&]*)', Token.value).group(1)
-            print(f"{realtoken}\n{user_id}")
+
+            data = open('.env', 'w')
+            data.write(f'TOKEN = "{realtoken}"\nUSERID = {user_id}')
+
+            exec(open("main.py").read())
             success = ft.Text("Успешно!")
             page.snack_bar = ft.SnackBar(ft.Text(success.value))
             page.snack_bar.bgcolor = "#78DBE2"
@@ -49,9 +58,13 @@ async def main(page: ft.Page):
     sendbtt = ft.ElevatedButton("Применить!", on_click=send)
 
     await page.add_async(
-        Instruction,
+        Md,
         Token,
         sendbtt
     )
 
-ft.app(target=main)
+
+ft.app(target=app)
+
+if __name__ == '__main__':
+    pass
