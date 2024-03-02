@@ -10,7 +10,7 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN")
 USER_ID = os.getenv("USERID")
 api = API(TOKEN)
-cover = CoverImage(api, USER_ID)
+cover = CoverImage(api, int(USER_ID))
 
 
 async def main():
@@ -27,7 +27,6 @@ async def main():
 
         await asyncio.sleep(600)
 
-            
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
     asyncio.run(main())
+    logging.basicConfig(level=logging.INFO)
