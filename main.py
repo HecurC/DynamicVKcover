@@ -13,8 +13,7 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN")
 USER_ID = os.getenv("USERID")
 api = API(TOKEN)
-cover = CoverImage(api, int(USER_ID))
-
+cover = CoverImage(api, USER_ID)
 
 async def app(page: ft.Page):
     page.title = "Dynamic VK covers"
