@@ -5,3 +5,4 @@ pendulum==2.1.2
 Pillow==10.0.1
 python-dotenv==1.0.0
 vkbottle==4.3.12
+flet==0.20.2
