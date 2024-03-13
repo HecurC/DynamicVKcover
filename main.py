@@ -10,11 +10,14 @@ from cover import CoverImage
 
 load_dotenv()
 
+<<<<<<< Updated upstream
 TOKEN = os.getenv("TOKEN")
 USER_ID = os.getenv("USERID")
 api = API(TOKEN)
 cover = CoverImage(api, USER_ID)
 
+=======
+>>>>>>> Stashed changes
 async def app(page: ft.Page):
     page.title = "Dynamic VK covers"
     page.theme_mode = ft.ThemeMode.DARK
@@ -64,17 +67,24 @@ async def app(page: ft.Page):
             data.write(f'TOKEN={realtoken}\nUSERID={user_id}')
             data.close()
 
+            TOKEN = os.getenv("TOKEN")
+            USER_ID = os.getenv("USERID")
+            api = API(TOKEN)
+            cover = CoverImage(api, USER_ID)
+
             success = ft.Text("Успешно!")
             page.snack_bar = ft.SnackBar(ft.Text(success.value))
             page.snack_bar.bgcolor = "#78DBE2"
             page.snack_bar.open = True
+
+            await page.update_async()
 
             while True:
                 try:
                     await cover.draw_cover(url="https://minimalistic-wallpaper.demolab.com/?random")
                 except Exception as e:
                     print(f"An error occurred while drawing the cover: {e}")
-                    await cover.draw_cover(url="https://imgbly.com/ib/paOsXGoMl4.png")
+                    await cover.draw_cover(url="https://i.ibb.co/gV8Kf3Y/pa-Os-XGo-Ml4.png")
                 try:
                     await cover.upload_cover()
                 except Exception as e:

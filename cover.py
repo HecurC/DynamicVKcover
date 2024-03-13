@@ -50,7 +50,7 @@ class CoverImage:
         text_params = [
             ((self.WIDTH / 2, self.HEIGHT / 2), current_time, font_time, 3),
             ((self.WIDTH / 2, self.HEIGHT / 2 + 100), formatted_date, font_date, 3)
-        #     ((self.WIDTH / 2 + 700, self.HEIGHT / 2 + 200), "Custom text", font_alert, 2),
+        #   ((self.WIDTH / 2 + 700, self.HEIGHT / 2 + 200), "Custom text", font_alert, 2),
         ]
 
         for xy, text, font, stroke_width in text_params:
