@@ -10,14 +10,11 @@ from cover import CoverImage
 
 load_dotenv()
 
-<<<<<<< Updated upstream
 TOKEN = os.getenv("TOKEN")
 USER_ID = os.getenv("USERID")
 api = API(TOKEN)
 cover = CoverImage(api, USER_ID)
 
-=======
->>>>>>> Stashed changes
 async def app(page: ft.Page):
     page.title = "Dynamic VK covers"
     page.theme_mode = ft.ThemeMode.DARK
